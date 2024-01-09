@@ -54,4 +54,22 @@ class _ExchangeCurrencyMainScreenState extends State<ExchangeCurrencyMainScreen>
         ],
             ),
       ),
-    );}}
+    );}
+}
+// 대상 통화 금액을 업데이트합니다.
+// void _updateTargetAmount() {
+//   // 환율 정보를 가져옵니다.
+//   double rate = _getRate(selectCurrency, targetCurrency);
+//   // 대상 통화 금액을 계산합니다.
+//   targetAmount = selectAmount * rate;
+//   // 대상 통화 금액 입력 필드를 업데이트합니다.
+//   setState(() {
+//     _targetAmount = _targetAmount;
+//   });
+// }
+//
+// // 환율 정보를 가져옵니다.
+// double _getRate(String select, String target) {
+//   // TODO: 실제 환율 정보를 가져오는 코드를 작성합니다.
+//   return 1.0;
+// }
