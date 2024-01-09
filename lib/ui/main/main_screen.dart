@@ -70,7 +70,7 @@ class _ExchangeCurrencyMainScreenState
                   DropdownButton(
                     value: selectCurrency,
                     items: const [
-                      DropdownMenuItem(value: 'KRW', child: Text(' KRW')),
+                      DropdownMenuItem(value: 'KRW', child: Text('KRW')),
                       DropdownMenuItem(value: 'USD', child: Text('USD')),
                     ],
                     onChanged: (value) {
@@ -91,19 +91,27 @@ class _ExchangeCurrencyMainScreenState
                 text: targetAmount.toString(),
               ),
             ),
-            DropdownButton(
-              value: targetCurrency,
-              items: const [
-                DropdownMenuItem(value: 'KRW', child: Text(' KRW')),
-                DropdownMenuItem(value: 'USD', child: Text('USD')),
-              ],
-              onChanged: (value) {
-                setState(() {
-                  targetCurrency = value!;
-                });
-                updateTargetAmount();
-              },
+            Padding(
+              padding: const EdgeInsets.only(left: 20),
+              child: Row(
+                children: [
+                  DropdownButton(
+                    value: targetCurrency,
+                    items: const [
+                      DropdownMenuItem(value: 'KRW', child: Text('KRW')),
+                      DropdownMenuItem(value: 'USD', child: Text('USD')),
+                    ],
+                    onChanged: (value) {
+                      setState(() {
+                        targetCurrency = value!;
+                      });
+                      updateTargetAmount();
+                    },
+                  ),
+                ],
+              ),
             ),
+
           ],
         ),
       ),
