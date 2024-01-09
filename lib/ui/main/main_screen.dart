@@ -3,8 +3,6 @@ import 'package:exchange_currency/ui/main/main_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-
-
 class ExchangeCurrencyMainScreen extends StatefulWidget {
   const ExchangeCurrencyMainScreen({super.key});
 
@@ -27,7 +25,6 @@ class _ExchangeCurrencyMainScreenState
   // // 환율이 적용되는 통화
   // final repository = RateRepositoryImpl();
   //
-
 
   @override
   void dispose() {
@@ -106,7 +103,12 @@ class _ExchangeCurrencyMainScreenState
                 children: [
                   DropdownButton(
                     value: viewModel.targetCurrency,
-                    items: viewModel.currenyCodes.map((e) => DropdownMenuItem(child: Text(e), value: e,)).toList(),
+                    items: viewModel.currenyCodes
+                        .map((e) => DropdownMenuItem(
+                              child: Text(e),
+                              value: e,
+                            ))
+                        .toList(),
                     onChanged: (value) {
                       setState(() {
                         viewModel.targetCurrency = value!;

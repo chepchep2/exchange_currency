@@ -17,7 +17,7 @@ class MainViewModel extends ChangeNotifier {
 
   Future<void> updateTargetAmount() async {
     final exchangeRate = await repository.getRateResult(selectCurrency);
-    final targetRate = exchangeRate.rates?[targetCurrency];
+    final targetRate = exchangeRate.rates[targetCurrency];
 
     if (targetRate != null) {
 
