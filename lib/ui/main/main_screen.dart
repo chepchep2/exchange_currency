@@ -1,3 +1,4 @@
+import 'package:exchange_currency/data/repository/rate_repository_impl.dart';
 import 'package:flutter/material.dart';
 
 class ExchangeCurrencyMainScreen extends StatefulWidget {
@@ -13,8 +14,11 @@ class _ExchangeCurrencyMainScreenState extends State<ExchangeCurrencyMainScreen>
   num targetAmount = 1000.0;
   String selectCurrency = 'KRW';
   String targetCurrency = 'USD';
+  final repository = RateRepositoryImpl();요
+
   @override
   Widget build(BuildContext context) {
+    print(repository.getRateResult('USD'));
     return Scaffold(
       appBar: AppBar(title: const Text('환율 계산기'),),
       body: Padding(
