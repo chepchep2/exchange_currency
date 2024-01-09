@@ -14,11 +14,11 @@ class _ExchangeCurrencyMainScreenState extends State<ExchangeCurrencyMainScreen>
   num targetAmount = 1000.0;
   String selectCurrency = 'KRW';
   String targetCurrency = 'USD';
-  final repository = RateRepositoryImpl();요
+  final repository = RateRepositoryImpl();
 
   @override
   Widget build(BuildContext context) {
-    print(repository.getRateResult('USD'));
+    // print(repository.getRateResult('USD'));
     return Scaffold(
       appBar: AppBar(title: const Text('환율 계산기'),),
       body: Padding(

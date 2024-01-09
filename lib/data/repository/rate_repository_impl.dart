@@ -8,7 +8,7 @@ class RateRepositoryImpl implements RateRepository {
   @override
   Future<ExchangeRate> getRateResult(String baseCode) async {
     final dto = await _api.getRate(baseCode);
-    print(baseCode);
+    // print(baseCode);
 
     // return const ExchangeRate(baseCode: 'USD', rates: {"USD": 1});
     return ExchangeRate.fromJson(dto);
