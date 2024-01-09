@@ -5,10 +5,13 @@ class ExchangeCurrencyMainScreen extends StatefulWidget {
   const ExchangeCurrencyMainScreen({super.key});
 
   @override
-  State<ExchangeCurrencyMainScreen> createState() => _ExchangeCurrencyMainScreenState();
+  State<ExchangeCurrencyMainScreen> createState() =>
+      _ExchangeCurrencyMainScreenState();
 }
 
-class _ExchangeCurrencyMainScreenState extends State<ExchangeCurrencyMainScreen> {
+class _ExchangeCurrencyMainScreenState
+    extends State<ExchangeCurrencyMainScreen> {
+  final textController = TextEditingController();
 
   num selectAmount = 1000.0;
   num targetAmount = 1000.0;
@@ -17,48 +20,78 @@ class _ExchangeCurrencyMainScreenState extends State<ExchangeCurrencyMainScreen>
   final repository = RateRepositoryImpl();
 
   @override
+  void dispose() {
+    textController.dispose();
+    super.dispose();
+  }
+
+  Future<void> updateTargetAmount() async {
+    final exchangeRate = await repository.getRateResult(selectCurrency);
+    final targetRate = exchangeRate.rates?[targetCurrency];
+
+    if (targetRate != null) {
+      setState(() {
+        targetAmount = selectAmount * targetRate;
+      });
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     // print(repository.getRateResult('USD'));
     return Scaffold(
-      appBar: AppBar(title: const Text('환율 계산기'),),
+      appBar: AppBar(
+        title: const Text('환율 계산기'),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            TextField(keyboardType:TextInputType.number,
+            TextField(
+              controller: textController,
+              keyboardType: TextInputType.number,
               decoration: const InputDecoration(
-                labelText: '기준통화금액'
+                labelText: '기준통화금액',
               ),
-              onChanged: (source){
-              selectAmount = double.parse(source);
-              },),
-          Padding(
-            padding: const EdgeInsets.only(left: 20),
-            child: Row(
-              children: [
-                DropdownButton(
-                  value: selectCurrency,
-                  items: const [
-                    DropdownMenuItem(value: 'KRW',child: Text(' KRW')),
-                    DropdownMenuItem(value:'USD'
-                        ,child: Text('USD')),
-                ], onChanged: (value){
-                selectCurrency = value!;
-                },),
-              ],
+              onChanged: (source) {
+                selectAmount = double.parse(source);
+                updateTargetAmount();
+              },
             ),
-          ),
-            TextField(keyboardType:TextInputType.number,
-              decoration: const InputDecoration(
-                  labelText: '대상통화금액'
+            Padding(
+              padding: const EdgeInsets.only(left: 20),
+              child: Row(
+                children: [
+                  DropdownButton(
+                    value: selectCurrency,
+                    items: const [
+                      DropdownMenuItem(value: 'KRW', child: Text(' KRW')),
+                      DropdownMenuItem(value: 'USD', child: Text('USD')),
+                    ],
+                    onChanged: (value) {
+                      setState(() {
+                        selectCurrency = value!;
+                      });
+                      updateTargetAmount();
+                    },
+                  ),
+                ],
               ),
-              onChanged: (source){
-                targetAmount = double.parse(source);
-              },),
-        ],
             ),
+            TextField(
+              keyboardType: TextInputType.number,
+              decoration: const InputDecoration(labelText: '대상통화금액'),
+              readOnly: true,
+              controller: TextEditingController(text: targetAmount.toString()),
+              // onChanged: (source) {
+              //   targetAmount = double.parse(source);
+              // },
+            ),
+          ],
+        ),
       ),
-    );}
+    );
+  }
 }
 // 대상 통화 금액을 업데이트합니다.
 // void _updateTargetAmount() {
