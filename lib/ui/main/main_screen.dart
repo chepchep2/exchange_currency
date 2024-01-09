@@ -13,10 +13,14 @@ class _ExchangeCurrencyMainScreenState
     extends State<ExchangeCurrencyMainScreen> {
   final textController = TextEditingController();
 
-  num selectAmount = 1000.0;
-  num targetAmount = 1000.0;
+  num selectAmount = 1;
+  num targetAmount = 0;
   String selectCurrency = 'KRW';
+
+  // 기준이 되는 통화
   String targetCurrency = 'USD';
+
+  // 환율이 적용되는 통화
   final repository = RateRepositoryImpl();
 
   @override
@@ -55,6 +59,7 @@ class _ExchangeCurrencyMainScreenState
               ),
               onChanged: (source) {
                 selectAmount = double.parse(source);
+                // 1000원
                 updateTargetAmount();
               },
             ),
@@ -82,10 +87,22 @@ class _ExchangeCurrencyMainScreenState
               keyboardType: TextInputType.number,
               decoration: const InputDecoration(labelText: '대상통화금액'),
               readOnly: true,
-              controller: TextEditingController(text: targetAmount.toString()),
-              // onChanged: (source) {
-              //   targetAmount = double.parse(source);
-              // },
+              controller: TextEditingController(
+                text: targetAmount.toString(),
+              ),
+            ),
+            DropdownButton(
+              value: targetCurrency,
+              items: const [
+                DropdownMenuItem(value: 'KRW', child: Text(' KRW')),
+                DropdownMenuItem(value: 'USD', child: Text('USD')),
+              ],
+              onChanged: (value) {
+                setState(() {
+                  targetCurrency = value!;
+                });
+                updateTargetAmount();
+              },
             ),
           ],
         ),
