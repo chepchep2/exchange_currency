@@ -9,7 +9,10 @@ class ExchangeCurrencyMainScreen extends StatefulWidget {
 
 class _ExchangeCurrencyMainScreenState extends State<ExchangeCurrencyMainScreen> {
 
-  final dropDown = [];
+  num selectAmount = 1000.0;
+  num targetAmount = 1000.0;
+  String selectCurrency = 'KRW';
+  String targetCurrency = 'USD';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,12 +25,32 @@ class _ExchangeCurrencyMainScreenState extends State<ExchangeCurrencyMainScreen>
               decoration: const InputDecoration(
                 labelText: '기준통화금액'
               ),
-              onTap: (){},),
-          DropdownButton(items: const [
-              DropdownMenuItem(child: Text('')),
-              DropdownMenuItem(child: Text('')),
-              DropdownMenuItem(child: Text('')),
-          ], onChanged: (value){},),
+              onChanged: (source){
+              selectAmount = double.parse(source);
+              },),
+          Padding(
+            padding: const EdgeInsets.only(left: 20),
+            child: Row(
+              children: [
+                DropdownButton(
+                  value: selectCurrency,
+                  items: const [
+                    DropdownMenuItem(value: 'KRW',child: Text(' KRW')),
+                    DropdownMenuItem(value:'USD'
+                        ,child: Text('USD')),
+                ], onChanged: (value){
+                selectCurrency = value!;
+                },),
+              ],
+            ),
+          ),
+            TextField(keyboardType:TextInputType.number,
+              decoration: const InputDecoration(
+                  labelText: '대상통화금액'
+              ),
+              onChanged: (source){
+                targetAmount = double.parse(source);
+              },),
         ],
             ),
       ),
